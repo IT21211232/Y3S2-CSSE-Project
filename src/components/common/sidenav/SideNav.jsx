@@ -2,6 +2,7 @@ import React from 'react'
 import NavBarSingle from '../navbarsingle/NavBarSingle'
 
 import dashboardimg from '../../../assets/icons/dashboard.svg'
+import logoImageYellow from '../../../assets/logo/logoyellow.svg'
 
 export default function SideNav() {
   const optionsCon = [
@@ -11,9 +12,12 @@ export default function SideNav() {
     }
   ]
   return (
-    <div className='bg-green-300 h-screen w-52 flex flex-col'>
+    <div className='h-screen w-52 flex flex-col'>
       {/* contains the logo */}
-      <div className='w-full h-36 bg-blue-300'></div>
+      <div className='flex flex-col items-center justify-center w-full h-36'>
+        <img className='size-20' src={logoImageYellow} alt="" />
+        <h1 className='text-2xl '><font className='text-primary_yellow'>Eco</font><font>Bin</font></h1>
+      </div>
       {/*Contains individual links*/}
       <div className='links flex-1 w-full bg-pink-100 overflow-y-auto'>
         <NavBarSingle/>
