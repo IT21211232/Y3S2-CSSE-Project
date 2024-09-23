@@ -8,8 +8,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='main'>
-      <SideNav/>
+    <div className='main flex h-screen w-full'>
+      <SideNav type={'user'}/>
+      <div className='flex-1 h-full'></div>
     </div>
   )
 }
