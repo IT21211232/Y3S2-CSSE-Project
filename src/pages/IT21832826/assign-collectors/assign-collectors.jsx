@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, PlusCircle, ArrowRightCircle } from "lucide-react"; // Import your icon here
 import { GlobalDataContext } from '../../../context/globalData';
 import { collection, getDocs, query, where, addDoc } from 'firebase/firestore';
 import { db } from '../../../config/firebase';
@@ -16,6 +16,7 @@ export default function AssignCollectors() {
   const [selectedCollector, setSelectedCollector] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [currentRequestId, setCurrentRequestId] = useState(null);
+  const [collectorName, setCollectorName] = useState(""); // State for collector name
   const { openNotification } = CustomNotification();
 
   const fetchData = async () => {
@@ -43,8 +44,24 @@ export default function AssignCollectors() {
     }
   };
 
+  // Fetch collector name when modal opens
+  const fetchCollectorName = async (requestId) => {
+    const q = query(
+      collection(db, "assignedCollector"),
+      where('requested', '==', requestId)
+    );
+    const querySnapshot = await getDocs(q);
+    const assignedData = querySnapshot.docs.map(doc => doc.data());
+    if (assignedData.length > 0) {
+      setCollectorName(assignedData[0].collectorName); // Set the collector name from the first found document
+    } else {
+      setCollectorName(""); // Reset if no data found
+    }
+  };
+
   const handleAssignClick = (requestId) => {
     setCurrentRequestId(requestId);
+    fetchCollectorName(requestId); // Fetch collector name when opening modal
     setShowModal(true);
   };
 
@@ -54,7 +71,7 @@ export default function AssignCollectors() {
         await addDoc(collection(db, "assignedCollector"), {
           requested: currentRequestId,
           collectorName: selectedCollector,
-        })
+        });
         openNotification("success", "Collector Assigned", `Collector ${selectedCollector} has been assigned successfully.`);
         setShowModal(false);
         setSelectedCollector("");
@@ -67,7 +84,6 @@ export default function AssignCollectors() {
 
   const downloadPDF = async () => {
     const doc = new jsPDF();
-  
     // Title
     doc.setFontSize(20);
     doc.text("Garbage Collection Requests", 14, 22);
@@ -102,13 +118,18 @@ export default function AssignCollectors() {
     doc.save("garbage_collection_requests.pdf");
   };
   
-  
-  
   useEffect(() => {
     setCurrentPageData("Dashboard");
     fetchData();
     fetchCollectors();
   }, []);
+
+  // Reset modal state on close
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedCollector("");
+    setCollectorName(""); // Reset collector name
+  };
 
   return (
     <div className="p-8 flex-1 h-full overflow-y-auto overflow-x-hidden">
@@ -144,10 +165,11 @@ export default function AssignCollectors() {
               <td className="p-4">{new Date(request.date_time.seconds * 1000).toLocaleString()}</td>
               <td className="p-4">
                 <button
-                  className="bg-primary_yellow text-[12px] font-bold text-gray-800 py-1 px-3 rounded-md hover:bg-[#d3d84f]"
+                  className="bg-transparent hover:bg-gray-200 rounded-full p-2"
                   onClick={() => handleAssignClick(request.id)}
+                  title="Assign Collector"
                 >
-                  Assign
+                  <ArrowRightCircle  className="text-primary_yellow" />
                 </button>
               </td>
             </tr>
@@ -158,7 +180,7 @@ export default function AssignCollectors() {
       {/* Modal for assigning collectors */}
       <Modal
         isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
+        onRequestClose={closeModal}
         className="bg-white p-8 rounded-lg shadow-md w-[400px] mx-auto my-20"
       >
         <h3 className="text-lg font-semibold mb-4">Assign Collector</h3>
@@ -181,19 +203,19 @@ export default function AssignCollectors() {
             </tr>
           </thead>
           <tbody>
-            {selectedCollector && (
-              <tr>
-                <td className="p-2">{selectedCollector}</td>
-              </tr>
-            )}
+            <tr>
+              <td className="p-2">{collectorName || "Not assigned"}</td>
+            </tr>
           </tbody>
         </table>
-        <button
-          onClick={handleSaveAssignment}
-          className="w-full bg-primary_yellow text-[12px] font-bold text-gray-800 py-2 px-4 rounded-md hover:bg-[#d3d84f] transition-colors duration-300"
-        >
-          Save
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={handleSaveAssignment}
+            className="bg-primary_yellow text-white py-2 px-4 rounded-md hover:bg-[#d3d84f] transition-colors duration-300"
+          >
+            Assign Collector
+          </button>
+        </div>
       </Modal>
     </div>
   );

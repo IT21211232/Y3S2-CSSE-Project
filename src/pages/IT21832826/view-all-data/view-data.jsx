@@ -94,7 +94,6 @@ export default function ViewData() {
             <th className="p-4">Location Name</th>
             <th className="p-4">Location</th>
             <th className="p-4">Date/Time</th>
-            <th className="p-4">Assign</th>
             <th className="p-4">Collected</th> {/* New Collected Status Column */}
           </tr>
         </thead>
@@ -107,14 +106,6 @@ export default function ViewData() {
               <td className="p-4">{request.locationName}</td>
               <td className="p-4">{`${request.location._lat}, ${request.location._long}`}</td>
               <td className="p-4">{new Date(request.date_time.seconds * 1000).toLocaleString()}</td>
-              <td className="p-4">
-                <button
-                  className="bg-primary_yellow text-[12px] font-bold text-gray-800 py-1 px-3 rounded-md hover:bg-[#d3d84f]"
-                  onClick={() => handleAssignClick(request.id)}
-                >
-                  Assign
-                </button>
-              </td>
               <td className="p-4">
                 <Switch
                   checked={request.collected} // Bind to the collected status
