@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import NavBarSingle from '../navbarsingle/NavBarSingle'
+import React, { useEffect, useState, useContext } from 'react'
 
-import {userNav} from '../../../utils/navbaroptions'
-
-import dashboardimg from '../../../assets/icons/dashboard.svg'
+// images
 import logoImageYellow from '../../../assets/logo/logoyellow.svg'
 
+// components
+import NavBarSingle from '../navbarsingle/NavBarSingle'
+
+// context
+import { GlobalDataContext } from '../../../context/globalData'
+
+// utils
+import {userNav} from '../../../utils/navbaroptions'
+
 export default function SideNav({type}) {
+  const {currentPage, setCurrentPageData} = useContext(GlobalDataContext);
   const [contentArr, setContentArr] = useState([]);
+
+  const dataToNavBarSingle = {
+    currentPage, setCurrentPageData
+  }
+
   useEffect(()=> {
     if(type === 'user'){
       setContentArr(userNav);
@@ -24,7 +36,7 @@ export default function SideNav({type}) {
       <div className='links flex-1 w-full overflow-y-auto'>
         {
           contentArr.map((data, index)=> (
-            <NavBarSingle key={index} data={data} position={index}/>
+            <NavBarSingle key={index} data={data} position={index} fromParent={dataToNavBarSingle}/>
           ))
         }
       </div>

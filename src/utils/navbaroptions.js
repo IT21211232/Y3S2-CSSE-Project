@@ -1,5 +1,6 @@
 import dashboardimg from '../assets/icons/Dashboard.svg'
 import scheduleimg from '../assets/icons/schedule.svg'
+import trackImage from '../assets/icons/track.svg'
 
 export const userNav = [
     {
@@ -15,6 +16,6 @@ export const userNav = [
     {
         name: 'Garbage Tracker',
         route: '/usertrack',
-        image: scheduleimg
+        image: trackImage
     },
 ]
