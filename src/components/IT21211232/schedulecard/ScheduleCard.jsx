@@ -1,10 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState, useContext, useEffect } from "react"
-import { Scale, Calendar, Clock, Edit, MapPin, Info, Rows3, Trash2 } from "lucide-react"
+import { Scale, Calendar, Clock, Edit, MapPin, Info, Rows3, Trash2, Check, X } from "lucide-react"
+import DeleteConfirm from '../deleteConfirmation/DeleteConfirm';
 
-export default function ScheduleCard({data}) {
-    const {id, date_time, location, locationName, type, weight} = data;
+export default function ScheduleCard({data, getUser}) {
+    const {id, date_time, location, locationName, type, weight, status, collected} = data;
+    
     const [expandUpdate, setExpandUpdate] = useState(false);
     const [expandDelete, setExpandDelete] = useState(false);
 
@@ -14,12 +16,16 @@ export default function ScheduleCard({data}) {
         expandUpdate, setExpandUpdate
     }
 
+    const deleteStates = {
+        expandDelete, setExpandDelete
+    }
+
     const handleEdit = () => {
         navigate('/userscheduleupdate', {state: data})
     }
 
     const handleDelete = () => {
-
+        setExpandDelete(true)
     }
     
   return (
@@ -50,21 +56,56 @@ export default function ScheduleCard({data}) {
             Date: {date_time.toDate().toISOString().split('T')[0]}
         </p>
         <div className="mt-4 flex space-x-2">
-        <button 
-            className="px-4 h-8 text-[12px] border bg-primary_yellow text-white rounded hover:bg-transparent hover:text-primary_yellow hover:border-primary_yellow transition duration-200 flex items-center"
-            onClick={() => handleEdit()}
-        >
-            <Edit className="mr-2 h-[14px] w-4" />
-            Edit
-        </button>
-        <button 
-            className="px-4 h-8 text-[12px] border border-red-400 text-red-400 rounded hover:bg-red-400 hover:text-white transition duration-200 flex items-center"
-            onClick={() => handleDelete()}
-        >
-            <Trash2 className="mr-2 h-[14px] w-4" />
-            Delete
-        </button>
+            {
+                (!collected && !status) &&
+                <button 
+                    className="px-4 h-8 text-[12px] border bg-primary_yellow text-white rounded hover:bg-transparent hover:text-primary_yellow hover:border-primary_yellow transition duration-200 flex items-center"
+                    onClick={() => handleEdit()}
+                >
+                    <Edit className="mr-2 h-[14px] w-4" />
+                    Edit
+                </button>
+            }
+            {
+                (!collected && !status) &&
+                <button 
+                    className="px-4 h-8 text-[12px] border border-red-400 text-red-400 rounded hover:bg-red-400 hover:text-white transition duration-200 flex items-center"
+                    onClick={() => handleDelete()}
+                >
+                    <Trash2 className="mr-2 h-[14px] w-4" />
+                    Delete
+                </button>
+            }
+        
         </div>
+        <div className='w-full flex justify-end h-auto mt-2'>
+
+            <div className='flex flex-col items-center mx-2'>
+                <div className={`flex items-center content-center p-1 rounded-[50%] border ${status ? 'border-green-400' : 'border-red-400'}`}>
+                    {
+                        status ?
+                        <Check className='text-green-400'/>
+                    :
+                        <X className='text-red-400'/>
+                    }
+                </div>
+                <p className={`text-[11px] mt-1 ${status ? 'text-green-400' : 'text-red-400'}`}>Scheduled</p>
+            </div>
+
+            <div className='flex flex-col items-center mx-2'>
+                <div className={`flex items-center content-center p-1 rounded-[50%] border ${collected ? 'border-green-400' : 'border-red-400'}`}>
+                    {
+                        collected ?
+                        <Check className='text-green-400'/>
+                    :
+                        <X className='text-red-400'/>
+                    }
+                </div>
+                <p className={`text-[11px] mt-1 ${collected ? 'text-green-400' : 'text-red-400'}`}>Collected</p>
+            </div>
+
+        </div>
+        <DeleteConfirm states={deleteStates} id={id} getUser={getUser}/>
     </div>
   )
 }

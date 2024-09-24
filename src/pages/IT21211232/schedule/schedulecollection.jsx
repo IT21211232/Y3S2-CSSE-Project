@@ -29,7 +29,6 @@ export default function dashboard() {
 
   console.log(userschedules);
   
-
   const usersSchedulesRef = collection(db, "userSchedules")
   
   const handleFieldFocus = (field) => {
@@ -67,7 +66,9 @@ export default function dashboard() {
             locationName: "Colombo, Sri Lanka", // String
             type: wasteType, // String
             userId: "tr53hy7e83n83", // String
-            weight: weight // Number
+            weight: weight, // Number,
+            status: false,
+            collected: false
           };
           console.log('added data:', addedData);
           
@@ -91,7 +92,6 @@ export default function dashboard() {
         time: time,
         date: date
     }
-    console.log('trigger una bn');
     
     insertUserSchedules();
     
@@ -119,8 +119,10 @@ export default function dashboard() {
     const newWasteSchedule = {};
 
     userschedules.forEach((schedule) => {
-      const date = convertFirebaseTimestampToDate(schedule.date_time);
-      newWasteSchedule[date] = schedule.type;
+      if(schedule.status === true && schedule.collected === false){
+        const date = convertFirebaseTimestampToDate(schedule.date_time);
+        newWasteSchedule[date] = schedule.type;
+      }
     });
 
     setToCalendar(newWasteSchedule);
@@ -213,7 +215,7 @@ export default function dashboard() {
         {
             userschedules &&
             userschedules.map((data, index)=> (
-                <ScheduleCard key={index} data={data}/>
+                <ScheduleCard key={index} data={data} getUser={getUserSchedules}/>
             ))
         }
         {/* <ScheduleCard/>
@@ -222,7 +224,6 @@ export default function dashboard() {
         </div>
         <div className="flex-1 relative top-[80px] p-6 rounded-md">
           <CalendarComp wasteSchedule={toCalendar}/>
-
         </div>
     </div>
   )
