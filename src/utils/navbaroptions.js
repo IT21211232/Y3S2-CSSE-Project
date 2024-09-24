@@ -24,6 +24,7 @@ export const userNav = [
     route: "/user/payment",
     image: paymentImage,
   },
+  //Akila
     {
         name: 'Assign Collector',
         route: '/assigncollectors',
@@ -38,5 +39,11 @@ export const userNav = [
         name: 'Payment Rates',
         route: '/paymentRate',
         image: paymentImage
+    },
+    //hiruni
+    {
+        name: 'Manage Trucks',
+        route: '/manage-trucks',
+        image: trackImage
     },
 ];

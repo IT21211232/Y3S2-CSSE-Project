@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Calendar, Clock, PlusCircle, ArrowRightCircle } from "lucide-react"; // Import your icon here
-import { GlobalDataContext } from '../../../context/globalData';
-import { collection, getDocs, query, where, addDoc } from 'firebase/firestore';
-import { db } from '../../../config/firebase';
-import Modal from 'react-modal';
+import { GlobalDataContext } from "../../../context/globalData";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
+import { db } from "../../../config/firebase";
+import Modal from "react-modal";
 import CustomNotification from "../../../components/IT21832826/CustomNotification";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import autoTable from 'jspdf-autotable';
+import autoTable from "jspdf-autotable";
 
 export default function AssignCollectors() {
   const { currentPage, setCurrentPageData } = useContext(GlobalDataContext);
@@ -23,11 +23,14 @@ export default function AssignCollectors() {
     try {
       const q = query(
         collection(db, "userSchedules"),
-        where('status', '==', true),
-        where('collected', '==', false)
+        where("status", "==", true),
+        where("collected", "==", false)
       );
       const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const data = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setRequests(data);
     } catch (error) {
       console.error(error);
@@ -37,7 +40,7 @@ export default function AssignCollectors() {
   const fetchCollectors = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "collectors"));
-      const data = querySnapshot.docs.map(doc => doc.data());
+      const data = querySnapshot.docs.map((doc) => doc.data());
       setCollectors(data);
     } catch (error) {
       console.error(error);
@@ -48,10 +51,10 @@ export default function AssignCollectors() {
   const fetchCollectorName = async (requestId) => {
     const q = query(
       collection(db, "assignedCollector"),
-      where('requested', '==', requestId)
+      where("requested", "==", requestId)
     );
     const querySnapshot = await getDocs(q);
-    const assignedData = querySnapshot.docs.map(doc => doc.data());
+    const assignedData = querySnapshot.docs.map((doc) => doc.data());
     if (assignedData.length > 0) {
       setCollectorName(assignedData[0].collectorName); // Set the collector name from the first found document
     } else {
@@ -72,7 +75,11 @@ export default function AssignCollectors() {
           requested: currentRequestId,
           collectorName: selectedCollector,
         });
-        openNotification("success", "Collector Assigned", `Collector ${selectedCollector} has been assigned successfully.`);
+        openNotification(
+          "success",
+          "Collector Assigned",
+          `Collector ${selectedCollector} has been assigned successfully.`
+        );
         setShowModal(false);
         setSelectedCollector("");
         fetchData(); // Refresh the request data after assignment
@@ -86,8 +93,9 @@ export default function AssignCollectors() {
     const doc = new jsPDF();
     // Title
     doc.setFontSize(20);
+    doc.setTextColor(0, 0, 0); // Set text color to black
     doc.text("Garbage Collection Requests", 14, 22);
-  
+
     // Table header and data
     const headers = ["User ID", "Type", "Weight", "Location Name", "Date/Time"];
     const data = requests.map((request) => [
@@ -95,29 +103,39 @@ export default function AssignCollectors() {
       request.type,
       request.weight,
       request.locationName,
-      new Date(request.date_time.seconds * 1000).toLocaleString()
+      new Date(request.date_time.seconds * 1000).toLocaleString(),
     ]);
-  
-    // Use autoTable to create the table
+
+    // Use autoTable to create the table with custom styles
     autoTable(doc, {
       head: [headers],
       body: data,
       startY: 40,
-      styles: { overflow: 'linebreak', fontSize: 10 },
-      headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255], fontSize: 12 },
+      styles: {
+        overflow: "linebreak",
+        fontSize: 10,
+        cellPadding: 5,
+        halign: "center", // Center the text in the cells
+      },
+      headStyles: {
+        fillColor: [22, 160, 133], // Change this to your preferred header color
+        textColor: [255, 255, 255], // White text color
+        fontSize: 12,
+        halign: "center", // Center header text
+      },
       columnStyles: {
         0: { cellWidth: 40 }, // User ID
         1: { cellWidth: 30 }, // Type
         2: { cellWidth: 30 }, // Weight
         3: { cellWidth: 40 }, // Location Name
-        5: { cellWidth: 50 }  // Date/Time
+        4: { cellWidth: 50 }, // Date/Time
       },
     });
-  
+
     // Save the PDF
     doc.save("garbage_collection_requests.pdf");
   };
-  
+
   useEffect(() => {
     setCurrentPageData("Dashboard");
     fetchData();
@@ -142,7 +160,10 @@ export default function AssignCollectors() {
       >
         Download PDF
       </button>
-      <table id="requests-table" className="w-full bg-white rounded-lg shadow-md">
+      <table
+        id="requests-table"
+        className="w-full bg-white rounded-lg shadow-md"
+      >
         <thead>
           <tr className="bg-gray-100 text-gray-600 text-left">
             <th className="p-4">User ID</th>
@@ -162,14 +183,16 @@ export default function AssignCollectors() {
               <td className="p-4">{request.weight}</td>
               <td className="p-4">{request.locationName}</td>
               <td className="p-4">{`${request.location._lat}, ${request.location._long}`}</td>
-              <td className="p-4">{new Date(request.date_time.seconds * 1000).toLocaleString()}</td>
+              <td className="p-4">
+                {new Date(request.date_time.seconds * 1000).toLocaleString()}
+              </td>
               <td className="p-4">
                 <button
                   className="bg-transparent hover:bg-gray-200 rounded-full p-2"
                   onClick={() => handleAssignClick(request.id)}
                   title="Assign Collector"
                 >
-                  <ArrowRightCircle  className="text-primary_yellow" />
+                  <ArrowRightCircle className="text-primary_yellow" />
                 </button>
               </td>
             </tr>
