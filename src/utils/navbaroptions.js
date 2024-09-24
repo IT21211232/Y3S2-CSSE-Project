@@ -26,7 +26,7 @@ export const userNav = [
   },
     {
         name: 'Assign Collector',
-        route: '/collectordashboard',
+        route: '/assigncollectors',
         image: trackImage
     },
     {
