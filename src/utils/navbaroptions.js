@@ -27,16 +27,16 @@ export const userNav = [
     {
         name: 'Assign Collector',
         route: '/collectordashboard',
-        image: dashboardimg
+        image: trackImage
     },
     {
-        name: 'User Data',
+        name: 'Collection requests',
         route: '/viewdata',
-        image: dashboardimg
+        image: trackImage
     },
     {
         name: 'Payment Rates',
         route: '/paymentRate',
-        image: dashboardimg
+        image: paymentImage
     },
 ];
