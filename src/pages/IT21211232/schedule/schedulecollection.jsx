@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from "react"
-import { Calendar, Clock } from "lucide-react"
+import { Scale, Calendar, Clock, Edit, Trash2 } from "lucide-react"
 import { GlobalDataContext } from '../../../context/globalData'
 import TopNav from "../../../components/common/topnav/TopNav"
+import ScheduleCard from "../../../components/IT21211232/schedulecard/ScheduleCard"
 
 export default function dashboard() {
   const {currentPage, setCurrentPageData} = useContext(GlobalDataContext)
@@ -30,14 +31,14 @@ export default function dashboard() {
 }, [])
 
   return (
-    <div className="relative flex-1 h-full overflow-y-auto overflow-x-hidden">
-        <TopNav/>
+    <div className="relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden">
+        <TopNav title={"Schedule Collection"}/>
     {/*Selection container*/}
-        <div className="flex flex-col items-center w-[50%] mt-10">
+        <div className="flex flex-col items-center w-[50%] mt-3 pt-14">
         <h2 className="text-lg font-semibold mb-6 text-center text-gray-800">
             Schedule Special Garbage Collections
         </h2>
-        <form className="space-y-4 p-8 rounded-lg shadow-md w-[80%]">
+        <form className="bg-white space-y-4 p-8 rounded-lg shadow-md w-[80%] mb-6">
             <div>
             <select
                 type="text"
@@ -103,6 +104,12 @@ export default function dashboard() {
             View Schedules
             </button>
         </form>
+
+        <ScheduleCard/>
+        <ScheduleCard/>
+        <ScheduleCard/>
+        <ScheduleCard/>
+
         </div>
     </div>
   )
