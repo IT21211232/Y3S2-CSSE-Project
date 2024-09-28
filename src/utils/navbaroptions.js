@@ -46,4 +46,9 @@ export const userNav = [
         route: '/manage-trucks',
         image: trackImage
     },
+    {
+        name: 'Manage Dump Locations',
+        route: '/manage-dump-locations',
+        image: trackImage
+    },
 ];
