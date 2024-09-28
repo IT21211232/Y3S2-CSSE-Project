@@ -17,6 +17,7 @@ import UserPayment from "./pages/IT21211232/payments/Payments.jsx";
 // Shalinda Imports
 import {
   LoginPage,
+  LogoutPage,
   RegisterPage,
   WasteGeneratedOverTimePage,
   WasteGoalsPage,
@@ -37,6 +38,8 @@ import ManageDumpLocations from "./pages/IT21832826/manage-locations/manage-loca
 
 function App() {
   const [count, setCount] = useState(0);
+
+  if (!localStorage.getItem("role")) [localStorage.setItem("role", "PUBLIC")];
 
   return (
     <GlobalDataContextProvider>
@@ -62,6 +65,7 @@ function App() {
 
           {/* Shalinda Routes */}
           <Routes>
+            <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route
@@ -78,6 +82,7 @@ function App() {
               element={<WastePropotionsPage />}
             />
             <Route path="/waste-goals" element={<WasteGoalsPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
           </Routes>
           {/* Shalinda Routes End */}
 
