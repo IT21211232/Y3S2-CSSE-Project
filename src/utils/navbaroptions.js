@@ -80,6 +80,12 @@ const userNav = [
     roles: ["USER"],
   },
   {
+    name: 'Dashboard',
+    route: '/admin/dashboard',
+    image: dashboardimg,
+    roles: ["ADMIN", "COLLECTOR"],
+  },
+  {
     name: "Assign Collector",
     route: "/assigncollectors",
     image: trackImage,

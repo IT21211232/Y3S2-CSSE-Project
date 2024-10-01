@@ -34,6 +34,7 @@ import ViewData from "./pages/IT21832826/view-all-data/view-data.jsx";
 import PaymentRate from "./pages/IT21832826/payment-rate/payment-rate.jsx";
 import ManageTrucks from "./pages/IT21838248/truck-management/truck-management.jsx";
 import ManageDumpLocations from "./pages/IT21832826/manage-locations/manage-locations.jsx";
+import AdminDashboard from "./pages/IT21832826/dashboard/dashboard.jsx";
 // Akila Imports End
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
 
           {/* Akila Routes */}
           <Routes>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/assigncollectors" element={<AssignCollectors />} />
             <Route path="/viewdata" element={<ViewData />} />
             <Route path="/paymentrate" element={<PaymentRate />} />

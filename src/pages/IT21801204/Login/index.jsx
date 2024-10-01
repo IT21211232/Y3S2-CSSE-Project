@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     if (storedRole === "ADMIN") {
       console.log("Login as admin");
-      navigate("/assigncollectors");
+      navigate("/admin/dashboard");
       // Add navigation for admin
     } else if (storedRole === "USER") {
       console.log("Login as user");
@@ -32,7 +32,7 @@ const LoginPage = () => {
       // Add navigation for user
     } else if (storedRole === "COLLECTOR") {
       console.log("Login as COLLECTOR");
-      navigate("/viewdata");
+      navigate("/admin/dashboard");
       // Add navigation for collector
     } else {
       localStorage.setItem("role", "PUBLIC");
