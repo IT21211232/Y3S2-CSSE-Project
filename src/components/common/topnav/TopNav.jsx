@@ -5,7 +5,7 @@ export default function TopNav({title}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-md w-[98%] rounded-lg top-[10px] left-2/4 relative -translate-x-1/2">
+    <nav className="z-40 bg-white shadow-md w-[98%] rounded-lg top-[10px] left-2/4 absolute -translate-x-1/2">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
