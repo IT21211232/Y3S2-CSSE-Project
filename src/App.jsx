@@ -38,6 +38,8 @@ function App() {
             <Route path="/userschedule" element={<ScheduleCollection />} />
             <Route path="/userscheduleupdate" element={<UpdateSchedule />} />
           </Routes>
+
+          {/* Shalinda Routes */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
@@ -56,6 +58,7 @@ function App() {
             />
             <Route path="/waste-goals" element={<WasteGoalsPage />} />
           </Routes>
+          {/* Shalinda Routes End */}
         </Router>
       </div>
     </GlobalDataContextProvider>
