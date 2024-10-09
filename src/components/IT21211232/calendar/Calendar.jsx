@@ -41,7 +41,7 @@ const Calendar = ({ wasteSchedule , scheduleData}) => {
       const wasteForDate = getWasteForDate(day);
 
       days.push(
-        <div key={day} className="border p-2 h-24 text-center">
+        <div key={day} className="border border-primary_yellow_light rounded-xl p-2 h-24 text-center">
           <div className="font-bold mb-1">{day}</div>
           {wasteForDate && (
             <div className="text-xs mt-2 bg-yellow-100 p-1 rounded w-fit">
@@ -59,13 +59,13 @@ const Calendar = ({ wasteSchedule , scheduleData}) => {
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <button onClick={goToPreviousMonth} className="text-lg p-2">
-        <CircleChevronLeft />
+        <CircleChevronLeft className="text-gray-300 size-10"/>
         </button>
         <div>
           {currentDate.toLocaleString("default", { month: "long" })} {currentDate.getFullYear()}
         </div>
         <button onClick={goToNextMonth} className="text-lg p-2">
-          <CircleChevronRight/>
+          <CircleChevronRight className="text-gray-300 size-10"/>
         </button>
       </div>
       
