@@ -17,7 +17,11 @@ import UpdateSchedule from "./pages/IT21211232/updateSchedule/UpdateSchedule.jsx
 import {
   LoginPage,
   RegisterPage,
+  WasteGeneratedOverTimePage,
+  WasteGoalsPage,
   WasteMonitorDashboardPage,
+  WastePropotionsPage,
+  WasteTypesPage,
 } from "./pages/IT21801204";
 // Shalinda Imports End
 
@@ -41,6 +45,16 @@ function App() {
               path="/dashboard/waste-monitor"
               element={<WasteMonitorDashboardPage />}
             />
+            <Route
+              path="/chart/waste-generated-overtime"
+              element={<WasteGeneratedOverTimePage />}
+            />
+            <Route path="/chart/waste-types" element={<WasteTypesPage />} />
+            <Route
+              path="/chart/waste-propotions"
+              element={<WastePropotionsPage />}
+            />
+            <Route path="/waste-goals" element={<WasteGoalsPage />} />
           </Routes>
         </Router>
       </div>
