@@ -43,7 +43,7 @@ export default function UpdateSchedule() {
             const updatedData = {
                 date_time: firestoretimestamp, // Firestore Timestamp
                 location: new GeoPoint(45, 76), // GeoPoint
-                locationName: "Colombo, Sri Lanka", // String
+                locationName: locationNameS, // String
                 type: wasteTypeS, // String
                 userId: "tr53hy7e83n83", // String
                 weight: weightS // Number
@@ -114,6 +114,17 @@ export default function UpdateSchedule() {
                 <option value="electronics">Electronics</option>
                 <option value="paper">Paper</option>
             </select>
+            </div>
+            <div>
+            <input
+                type="text"
+                placeholder="Location"
+                className={getFieldStyle("location")}
+                value={weightS}
+                onChange={(e) => setLocationName(e.target.value)}
+                onFocus={() => handleFieldFocus("location")}
+                onBlur={handleFieldBlur}
+            />
             </div>
             <div>
             <input
