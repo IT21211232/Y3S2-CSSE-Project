@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='bg-black h-screen w-full flex'>
+    <div className='main'>
       
     </div>
   )
