@@ -54,7 +54,7 @@ export default function dashboard() {
           </h2>
           <form className="space-y-4 p-8 rounded-lg shadow-md w-[80%]">
             <div>
-              <input
+              <select
                 type="text"
                 placeholder="Waste Type"
                 className={getFieldStyle("wasteType")}
@@ -62,7 +62,12 @@ export default function dashboard() {
                 onChange={(e) => setWasteType(e.target.value)}
                 onFocus={() => handleFieldFocus("wasteType")}
                 onBlur={handleFieldBlur}
-              />
+              >
+                <option value="food">Food</option>
+                <option value="polythene">Polythene/Plastic</option>
+                <option value="electronics">Electronics</option>
+                <option value="paper">Paper</option>
+              </select>
             </div>
             <div>
               <input
