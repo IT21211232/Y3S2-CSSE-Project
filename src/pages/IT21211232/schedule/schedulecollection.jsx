@@ -4,14 +4,23 @@ import { GlobalDataContext } from '../../../context/globalData'
 import TopNav from "../../../components/common/topnav/TopNav"
 import ScheduleCard from "../../../components/IT21211232/schedulecard/ScheduleCard"
 
+// firebase imports
+import { collection, getDocs } from "firebase/firestore" // imported from the firestore
+import {db} from '../../../config/firebase'; // imported from the firebase file in config
+
 export default function dashboard() {
   const {currentPage, setCurrentPageData} = useContext(GlobalDataContext)
-  const [wasteType, setWasteType] = useState("")
+  const [wasteType, setWasteType] = useState("food")
   const [weight, setWeight] = useState("")
   const [time, setTime] = useState("")
   const [date, setDate] = useState("")
   const [selectedField, setSelectedField] = useState(null)
 
+  // retrieved from the database
+  const [userschedules, setUserSchedules] = useState([]);
+
+  const usersSchedulesRef = collection(db, "userSchedules")
+  
   const handleFieldFocus = (field) => {
     setSelectedField(field)
   }
@@ -26,26 +35,52 @@ export default function dashboard() {
     }`
   }
 
+  const submitData = (e) => {
+    e.preventDefault();
+
+    const dataObject = {
+        wasteType: wasteType,
+        weight: weight,
+        time: time,
+        date: date
+    }
+  }
+
+
+
   useEffect(()=> {
   setCurrentPageData('Schedule Collection');
+
+  const getUserSchedules = async () => {
+    const data = await getDocs(usersSchedulesRef);
+    setUserSchedules(data.docs.map((doc) => ({...doc.data(), id: doc.id })))
+  }
+
+  getUserSchedules();
+  
 }, [])
+console.log(userschedules);
 
   return (
     <div className="relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden">
         <TopNav title={"Schedule Collection"}/>
     {/*Selection container*/}
         <div className="flex flex-col items-center w-[50%] mt-3 pt-14">
+        <form 
+        onSubmit={submitData}
+        className="bg-white space-y-4 p-8 rounded-lg shadow-md w-[80%] mb-6">
         <h2 className="text-lg font-semibold mb-6 text-center text-gray-800">
             Schedule Special Garbage Collections
         </h2>
-        <form className="bg-white space-y-4 p-8 rounded-lg shadow-md w-[80%] mb-6">
             <div>
             <select
                 type="text"
                 placeholder="Waste Type"
                 className={getFieldStyle("wasteType")}
                 value={wasteType}
-                onChange={(e) => setWasteType(e.target.value)}
+                // onChange={(e) => setWasteType(e.target.value)}
+                onChange={(e)=> {setWasteType(e.target.value);
+                }}
                 onFocus={() => handleFieldFocus("wasteType")}
                 onBlur={handleFieldBlur}
             >
@@ -105,10 +140,15 @@ export default function dashboard() {
             </button>
         </form>
 
+        {
+            userschedules &&
+            userschedules.map((data, index)=> (
+                <ScheduleCard key={index} data={data}/>
+            ))
+        }
+        {/* <ScheduleCard/>
         <ScheduleCard/>
-        <ScheduleCard/>
-        <ScheduleCard/>
-        <ScheduleCard/>
+        <ScheduleCard/> */}
 
         </div>
     </div>
