@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Bell, Settings, ChevronDown, User } from 'lucide-react'
 
-export default function TopNav() {
+export default function TopNav({title}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-md w-[98%] rounded-lg top-[10px] left-2/4 absolute -translate-x-1/2">
+    <nav className="bg-white shadow-md w-[98%] rounded-lg top-[10px] left-2/4 relative -translate-x-1/2">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <span className="text-lg font-semibold text-gray-800">Schedule Collection</span>
+            <span className="text-lg font-semibold text-gray-800">{title}</span>
           </div>
           
           <div className="flex items-center">
@@ -27,12 +27,12 @@ export default function TopNav() {
             
             <button className="ml-6 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">View notifications</span>
-              <Bell className="h-6 w-6" />
+              <Bell className="h-5 w-5" />
             </button>
             
             <button className="ml-3 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">View settings</span>
-              <Settings className="h-6 w-6" />
+              <Settings className="h-5 w-5" />
             </button>
             
             <div className="ml-3 relative">
