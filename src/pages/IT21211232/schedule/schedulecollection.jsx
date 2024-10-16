@@ -5,7 +5,7 @@ import TopNav from "../../../components/common/topnav/TopNav"
 import ScheduleCard from "../../../components/IT21211232/schedulecard/ScheduleCard"
 
 // firebase imports
-import { collection, getDocs } from "firebase/firestore" // imported from the firestore
+import { collection, getDocs, addDoc, Timestamp, GeoPoint } from "firebase/firestore" // imported from the firestore
 import {db} from '../../../config/firebase'; // imported from the firebase file in config
 
 export default function dashboard() {
@@ -35,6 +35,42 @@ export default function dashboard() {
     }`
   }
 
+  // fetch the user schedules
+  const getUserSchedules = async () => {
+    const data = await getDocs(usersSchedulesRef);
+    setUserSchedules(data.docs.map((doc) => ({...doc.data(), id: doc.id })))
+  }
+
+  const insertUserSchedules = async () => {
+    try {
+        // combning the date and time into a single string
+        const dateTimeStr = `${date}T${time}:00`;
+        const combinedDateTime = new Date(dateTimeStr);
+
+        // creating a firestore timestamp
+        const firestoretimestamp = Timestamp.fromDate(combinedDateTime)
+
+        const addedData = {
+            date_time: firestoretimestamp, // Firestore Timestamp
+            location: new GeoPoint(45, 76), // GeoPoint
+            locationName: "Colombo, Sri Lanka", // String
+            type: wasteType, // String
+            userId: "tr53hy7e83n83", // String
+            weight: weight // Number
+          };
+          console.log('added data:', addedData);
+          
+          // Add the object to a Firestore collection
+          const docRef = await addDoc(usersSchedulesRef, addedData);
+          console.log("Document written with ID: ", docRef.id);
+
+          getUserSchedules();
+    } catch (error) {
+        console.log(error);
+        
+    }
+  }
+
   const submitData = (e) => {
     e.preventDefault();
 
@@ -44,22 +80,16 @@ export default function dashboard() {
         time: time,
         date: date
     }
+    console.log('trigger una bn');
+    
+    insertUserSchedules();
+    
   }
-
-
 
   useEffect(()=> {
-  setCurrentPageData('Schedule Collection');
-
-  const getUserSchedules = async () => {
-    const data = await getDocs(usersSchedulesRef);
-    setUserSchedules(data.docs.map((doc) => ({...doc.data(), id: doc.id })))
-  }
-
-  getUserSchedules();
-  
+  setCurrentPageData('Schedule Collection'); // set the current page so that active page of navbar is indicated
+  getUserSchedules(); // function called to fetch the user schedules
 }, [])
-console.log(userschedules);
 
   return (
     <div className="relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden">
@@ -131,12 +161,6 @@ console.log(userschedules);
             className="w-full bg-primary_yellow text-[12px] font-bold text-gray-800 py-2 px-4 rounded-md hover:bg-[#d3d84f] transition-colors duration-300"
             >
             Schedule Collection
-            </button>
-            <button
-            type="button"
-            className="w-full bg-gray-200 text-[12px] font-semibold text-gray-400 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors duration-300"
-            >
-            View Schedules
             </button>
         </form>
 
