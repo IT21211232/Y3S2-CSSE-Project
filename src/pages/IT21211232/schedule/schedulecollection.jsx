@@ -1,8 +1,13 @@
 import { useState, useContext, useEffect } from "react"
 import { Scale, Calendar, Clock, Edit, Trash2 } from "lucide-react"
 import { GlobalDataContext } from '../../../context/globalData'
+
+// import CalendarComp from '../../../components/IT21211232/calendar/Calendar'
 import TopNav from "../../../components/common/topnav/TopNav"
 import ScheduleCard from "../../../components/IT21211232/schedulecard/ScheduleCard"
+
+// components
+import CalendarComp from "../../../components/IT21211232/calendar/Calendar"
 
 // firebase imports
 import { collection, getDocs, addDoc, Timestamp, GeoPoint } from "firebase/firestore" // imported from the firestore
@@ -15,9 +20,15 @@ export default function dashboard() {
   const [time, setTime] = useState("")
   const [date, setDate] = useState("")
   const [selectedField, setSelectedField] = useState(null)
+  
 
   // retrieved from the database
   const [userschedules, setUserSchedules] = useState([]);
+
+  const [toCalendar, setToCalendar] = useState({});
+
+  console.log(userschedules);
+  
 
   const usersSchedulesRef = collection(db, "userSchedules")
   
@@ -86,16 +97,51 @@ export default function dashboard() {
     
   }
 
+  // calendar data
+  const wasteSchedule = {
+    "2024-10-17": "Plastic",
+    "2024-10-18": "Organic",
+    "2024-10-20": "Glass",
+    // Add more dates and waste types as needed
+  };
+
+  console.log(toCalendar);
+  
+
+   // Helper function to convert Firestore Timestamp to JavaScript date string
+   const convertFirebaseTimestampToDate = (firebaseTimestamp) => {
+    const date = firebaseTimestamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
+    return date.toISOString().split("T")[0]; // Return the date in "YYYY-MM-DD" format
+  };
+
+  // for the calendar
+  const generateWasteSchedule = () => {
+    const newWasteSchedule = {};
+
+    userschedules.forEach((schedule) => {
+      const date = convertFirebaseTimestampToDate(schedule.date_time);
+      newWasteSchedule[date] = schedule.type;
+    });
+
+    setToCalendar(newWasteSchedule);
+  };
+
   useEffect(()=> {
   setCurrentPageData('Schedule Collection'); // set the current page so that active page of navbar is indicated
   getUserSchedules(); // function called to fetch the user schedules
 }, [])
 
+  useEffect(()=> {
+    if (userschedules && userschedules.length > 0) {
+      generateWasteSchedule();
+    }
+  }, [userschedules])
+
   return (
-    <div className="relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden">
+    <div className="flex relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden">
         <TopNav title={"Schedule Collection"}/>
     {/*Selection container*/}
-        <div className="flex flex-col items-center w-[50%] mt-3 pt-14">
+        <div className="flex flex-col items-center w-[50%] mt-7 pt-14">
         <form 
         onSubmit={submitData}
         className="bg-white space-y-4 p-8 rounded-lg shadow-md w-[80%] mb-6">
@@ -173,6 +219,9 @@ export default function dashboard() {
         {/* <ScheduleCard/>
         <ScheduleCard/>
         <ScheduleCard/> */}
+        </div>
+        <div className="flex-1 relative top-[80px] p-6 rounded-md">
+          <CalendarComp wasteSchedule={toCalendar}/>
 
         </div>
     </div>
