@@ -14,7 +14,11 @@ import ScheduleCollection from "./pages/IT21211232/schedule/schedulecollection.j
 import UpdateSchedule from "./pages/IT21211232/updateSchedule/UpdateSchedule.jsx";
 
 // Shalinda Imports
-import { LoginPage, RegisterPage } from "./pages/IT21801204";
+import {
+  LoginPage,
+  RegisterPage,
+  WasteMonitorDashboardPage,
+} from "./pages/IT21801204";
 // Shalinda Imports End
 
 function App() {
@@ -33,6 +37,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/dashboard/waste-monitor"
+              element={<WasteMonitorDashboardPage />}
+            />
           </Routes>
         </Router>
       </div>
