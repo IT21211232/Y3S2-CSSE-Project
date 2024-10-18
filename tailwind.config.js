@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         primary_yellow: '#DEE140',
+        primary_yellow_light:'#f7fa6e'
       },
       // filter: {
       //   'yellow_filter': 'invert-[91%] sepia-[36%] saturate[856%] hue-rotate-[2deg] brightness-[93%] contrast-[89%]'

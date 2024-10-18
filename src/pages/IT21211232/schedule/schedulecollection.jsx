@@ -213,7 +213,7 @@ export default function dashboard() {
         {
             userschedules &&
             userschedules.map((data, index)=> (
-                <ScheduleCard key={index} data={data}/>
+                <ScheduleCard key={index} data={data} getUser={getUserSchedules}/>
             ))
         }
         {/* <ScheduleCard/>

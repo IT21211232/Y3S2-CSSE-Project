@@ -2,9 +2,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState, useContext, useEffect } from "react"
 import { Scale, Calendar, Clock, Edit, MapPin, Info, Rows3, Trash2 } from "lucide-react"
+import DeleteConfirm from '../deleteConfirmation/DeleteConfirm';
 
-export default function ScheduleCard({data}) {
+export default function ScheduleCard({data, getUser}) {
     const {id, date_time, location, locationName, type, weight} = data;
+    console.log(`id from : is ${id}`);
+    
     const [expandUpdate, setExpandUpdate] = useState(false);
     const [expandDelete, setExpandDelete] = useState(false);
 
@@ -14,12 +17,16 @@ export default function ScheduleCard({data}) {
         expandUpdate, setExpandUpdate
     }
 
+    const deleteStates = {
+        expandDelete, setExpandDelete
+    }
+
     const handleEdit = () => {
         navigate('/userscheduleupdate', {state: data})
     }
 
     const handleDelete = () => {
-
+        setExpandDelete(true)
     }
     
   return (
@@ -65,6 +72,7 @@ export default function ScheduleCard({data}) {
             Delete
         </button>
         </div>
+        <DeleteConfirm states={deleteStates} id={id} getUser={getUser}/>
     </div>
   )
 }
