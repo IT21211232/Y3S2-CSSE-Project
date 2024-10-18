@@ -12,6 +12,8 @@ import SideNav from "./components/common/sidenav/SideNav";
 import Userdashboard from "./pages/IT21211232/dashboard/dashboard.jsx";
 import ScheduleCollection from "./pages/IT21211232/schedule/schedulecollection.jsx";
 import UpdateSchedule from "./pages/IT21211232/updateSchedule/UpdateSchedule.jsx";
+import UserPayment from './pages/IT21211232/payments/Payments.jsx'
+
 
 // Shalinda Imports
 import {
@@ -23,6 +25,7 @@ import {
   WastePropotionsPage,
   WasteTypesPage,
 } from "./pages/IT21801204";
+import PaymentPortal from "./pages/IT21211232/paymentPortal/PaymentPortal.jsx";
 // Shalinda Imports End
 
 function App() {
@@ -34,9 +37,11 @@ function App() {
         <Router>
           <SideNav type={"user"} />
           <Routes>
-            <Route path="/userdashboard" element={<Userdashboard />} />
+            <Route path="/user/dashboard" element={<Userdashboard />} />
             <Route path="/userschedule" element={<ScheduleCollection />} />
             <Route path="/userscheduleupdate" element={<UpdateSchedule />} />
+            <Route path="/user/payment" element={<UserPayment />} />
+            <Route path="/user/payment/portal" element={<PaymentPortal />} />
           </Routes>
 
           {/* Shalinda Routes */}

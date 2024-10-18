@@ -5,8 +5,6 @@ import {Info, Trash2, X} from "lucide-react"
 
 export default function DeleteConfirm({states, id, getUser}) {
     const {expandDelete, setExpandDelete} = states;
-    console.log(`id is : ${id}`);
-    
 
     const deleteSchedule = async () => {
         try {

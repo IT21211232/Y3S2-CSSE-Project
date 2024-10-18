@@ -1,11 +1,12 @@
 import dashboardimg from "../assets/icons/dashboard.svg";
 import scheduleimg from "../assets/icons/schedule.svg";
 import trackImage from "../assets/icons/track.svg";
+import paymentImage from '../assets/icons/payment.svg'
 
 export const userNav = [
   {
     name: "Dashboard",
-    route: "/userdashboard",
+    route: "/user/dashboard",
     image: dashboardimg,
   },
   {
@@ -17,5 +18,10 @@ export const userNav = [
     name: "Garbage Tracker",
     route: "/usertrack",
     image: trackImage,
+  },
+  {
+    name: "Payments",
+    route: "/user/payment",
+    image: paymentImage,
   },
 ];
