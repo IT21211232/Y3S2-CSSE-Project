@@ -1,5 +1,10 @@
-*{
+* {
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+.black-filter {
+  filter: brightness(0) saturate(100%) invert(0%) sepia(1%) saturate(4%)
+    hue-rotate(320deg) brightness(96%) contrast(104%);
 }
