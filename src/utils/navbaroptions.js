@@ -3,9 +3,28 @@ import scheduleimg from "../assets/icons/schedule.svg";
 import trackImage from "../assets/icons/track.svg";
 import paymentImage from "../assets/icons/payment.svg";
 import { faDesktop } from "@fortawesome/free-solid-svg-icons/faDesktop";
-import { faChartBar } from "@fortawesome/free-regular-svg-icons";
+import { faChartBar, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faClose, faKey } from "@fortawesome/free-solid-svg-icons";
 
 const userNav = [
+  {
+    name: "Register",
+    route: "/register",
+    faIcon: faUser,
+    roles: ["PUBLIC"],
+  },
+  {
+    name: "Login",
+    route: "/login",
+    faIcon: faKey,
+    roles: ["PUBLIC"],
+  },
+  {
+    name: "Payment Rates",
+    route: "/paymentRate",
+    image: paymentImage,
+    roles: ["ADMIN"],
+  },
   {
     name: "Dashboard",
     route: "/user/dashboard",
@@ -60,21 +79,24 @@ const userNav = [
     faIcon: faChartBar,
     roles: ["USER"],
   },
-    {
-        name: 'Assign Collector',
-        route: '/assigncollectors',
-        image: trackImage
-    },
-    {
-        name: 'Collection requests',
-        route: '/viewdata',
-        image: trackImage
-    },
-    {
-        name: 'Payment Rates',
-        route: '/paymentRate',
-        image: paymentImage
-    },
+  {
+    name: "Assign Collector",
+    route: "/assigncollectors",
+    image: trackImage,
+    roles: ["ADMIN"],
+  },
+  {
+    name: "Collection requests",
+    route: "/viewdata",
+    image: trackImage,
+    roles: ["ADMIN"],
+  },
+  {
+    name: "Logout",
+    route: "/logout",
+    faIcon: faClose,
+    roles: ["USER", "ADMIN", "COLLECTOR"],
+  },
 ];
 
 // Function to get navigation items based on role

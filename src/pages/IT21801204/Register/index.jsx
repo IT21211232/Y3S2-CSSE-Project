@@ -11,7 +11,7 @@ import { db } from "../../../config/firebase"; // Firestore reference
 const RegisterPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("USER");
   const [loading, setLoading] = useState(false); // Loader state
 
   const handleRegister = async (e) => {
@@ -39,7 +39,7 @@ const RegisterPage = (props) => {
       // Clear form states after successful registration
       setEmail("");
       setPassword("");
-      setRole("user");
+      setRole("USER");
     } catch (error) {
       console.error(error);
       alert(error.message);

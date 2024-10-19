@@ -1,17 +1,44 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faApple } from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import logoImageYellow from "../../../assets/logo/logoyellow.svg";
 import { db, auth } from "../../../config/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("USER"); // New state for role selection
   const [loading, setLoading] = useState(false); // State for loader
+
+  useEffect(() => {
+    redirect();
+  }, []);
+
+  const redirect = () => {
+    const storedRole = localStorage.getItem("role");
+
+    if (storedRole === "ADMIN") {
+      console.log("Login as admin");
+      navigate("/assigncollectors");
+      // Add navigation for admin
+    } else if (storedRole === "USER") {
+      console.log("Login as user");
+      navigate("/user/dashboard");
+      // Add navigation for user
+    } else if (storedRole === "COLLECTOR") {
+      console.log("Login as COLLECTOR");
+      navigate("/viewdata");
+      // Add navigation for collector
+    } else {
+      localStorage.setItem("role", "PUBLIC");
+      navigate("/login");
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,16 +62,7 @@ const LoginPage = () => {
         // Navigate based on the selected role and stored role
         if (storedRole === selectedRole) {
           alert("Login successful!");
-          if (storedRole === "ADMIN") {
-            console.log("Login as admin");
-            // Add navigation for admin
-          } else if (storedRole === "USER") {
-            console.log("Login as user");
-            // Add navigation for user
-          } else if (storedRole === "COLLECTOR") {
-            console.log("Login as COLLECTOR");
-            // Add navigation for collector
-          }
+          redirect();
         } else {
           alert("Selected role does not match your stored role.");
         }

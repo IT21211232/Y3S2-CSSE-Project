@@ -5,3 +5,4 @@ export { default as WasteGeneratedOverTimePage } from "./WasteGeneratedOverTime"
 export { default as WasteTypesPage } from "./WasteTypes";
 export { default as WastePropotionsPage } from "./WastePropotions";
 export { default as WasteGoalsPage } from "./WasteGoals";
+export { default as LogoutPage } from "./Logout";

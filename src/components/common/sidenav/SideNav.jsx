@@ -22,11 +22,9 @@ export default function SideNav({ type }) {
   };
 
   useEffect(() => {
-    // if (type === "user") {
-    //   setContentArr(getNavItems());
-    // }
-    setContentArr(getNavItems());
-  }, []);
+    setContentArr(getNavItems()); // Update navigation items
+  }, [currentPage]); // Add currentPage as a dependency
+
   return (
     <div className="h-screen relative w-52 flex flex-col [box-shadow:0px_5px_20px_5px_rgba(0,0,0,0.6)] rounded-md">
       {/* contains the logo */}
@@ -37,7 +35,7 @@ export default function SideNav({ type }) {
           <font>Bin</font>
         </h1>
       </div>
-      {/*Contains individual links*/}
+      {/* Contains individual links */}
       <div className="links flex-1 w-full overflow-y-auto">
         {contentArr.map((data, index) => (
           <NavBarSingle

@@ -12,12 +12,12 @@ import SideNav from "./components/common/sidenav/SideNav";
 import Userdashboard from "./pages/IT21211232/dashboard/dashboard.jsx";
 import ScheduleCollection from "./pages/IT21211232/schedule/schedulecollection.jsx";
 import UpdateSchedule from "./pages/IT21211232/updateSchedule/UpdateSchedule.jsx";
-import UserPayment from './pages/IT21211232/payments/Payments.jsx'
-
+import UserPayment from "./pages/IT21211232/payments/Payments.jsx";
 
 // Shalinda Imports
 import {
   LoginPage,
+  LogoutPage,
   RegisterPage,
   WasteGeneratedOverTimePage,
   WasteGoalsPage,
@@ -29,13 +29,15 @@ import PaymentPortal from "./pages/IT21211232/paymentPortal/PaymentPortal.jsx";
 // Shalinda Imports End
 
 // Akila Imports
-import AssignCollectors from './pages/IT21832826/assign-collectors/assign-collectors.jsx';
-import ViewData from './pages/IT21832826/view-all-data/view-data.jsx';
-import PaymentRate from './pages/IT21832826/payment-rate/payment-rate.jsx';
+import AssignCollectors from "./pages/IT21832826/assign-collectors/assign-collectors.jsx";
+import ViewData from "./pages/IT21832826/view-all-data/view-data.jsx";
+import PaymentRate from "./pages/IT21832826/payment-rate/payment-rate.jsx";
 // Akila Imports End
 
 function App() {
   const [count, setCount] = useState(0);
+
+  if (!localStorage.getItem("role")) [localStorage.setItem("role", "PUBLIC")];
 
   return (
     <GlobalDataContextProvider>
@@ -52,14 +54,15 @@ function App() {
 
           {/* Akila Routes */}
           <Routes>
-            <Route path='/assigncollectors' element={<AssignCollectors/>}/>
-            <Route path='/viewdata' element={<ViewData/>}/>
-            <Route path='/paymentrate' element={<PaymentRate />}/>
+            <Route path="/assigncollectors" element={<AssignCollectors />} />
+            <Route path="/viewdata" element={<ViewData />} />
+            <Route path="/paymentrate" element={<PaymentRate />} />
           </Routes>
           {/* Akila Routes End */}
 
           {/* Shalinda Routes */}
           <Routes>
+            <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route
@@ -76,6 +79,7 @@ function App() {
               element={<WastePropotionsPage />}
             />
             <Route path="/waste-goals" element={<WasteGoalsPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
           </Routes>
           {/* Shalinda Routes End */}
         </Router>
