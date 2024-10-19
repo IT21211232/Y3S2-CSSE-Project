@@ -24,4 +24,19 @@ export const userNav = [
     route: "/user/payment",
     image: paymentImage,
   },
+    {
+        name: 'Assign Collector',
+        route: '/assigncollectors',
+        image: trackImage
+    },
+    {
+        name: 'Collection requests',
+        route: '/viewdata',
+        image: trackImage
+    },
+    {
+        name: 'Payment Rates',
+        route: '/paymentRate',
+        image: paymentImage
+    },
 ];
