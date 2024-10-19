@@ -5,6 +5,7 @@ import { collection, getDocs } from "firebase/firestore" // imported from the fi
 import PaymentCard from '../../../components/IT21211232/paymentCard/PaymentCard';
 
 export default function Payments() {
+  const [totalWeight, setTotalWeight] = useState(0)
   const {setCurrentPageData} = useContext(GlobalDataContext)
   const [userSchedules, setUserSchedules] = useState([]);
 
@@ -28,11 +29,23 @@ export default function Payments() {
   useEffect(()=> {
     setCompletedArr(userSchedules.filter(item => item.status === true))
     setIncompletedArr(userSchedules.filter(item => item.status === false))
+    
+    let sum = 0;
+
+    userSchedules.forEach((obj) => {
+      if(obj.status === true){
+        sum += obj.weight * 220;
+      }
+    });
+
+    setTotalWeight(sum)
   }, [userSchedules])
   
   return (
     <div className='relative bg-gray-100 flex-1 h-full overflow-y-auto overflow-x-hidden'>
-      <div className='w-full h-[350px] bg-black'></div>
+      <div className='w-full h-[350px] bg-white flex items-center justify-center'>
+        <h1 className='text-[50px]'>Rs. <font className='text-gray-400'>{totalWeight}</font> </h1>
+      </div>
       <div className='w-full h-auto flex'>
         <div className='w-[50%] h-auto flex flex-col items-center'>
           <div className='flex flex-col items-center'>
