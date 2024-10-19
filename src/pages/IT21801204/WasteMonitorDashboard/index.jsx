@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { QRCodeSVG } from "qrcode.react";
 
 const WasteMonitorDashboardPage = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
   const [wasteData, setWasteData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(""); // New state for user ID
+  const [showQRCode, setShowQRCode] = useState(false); // State to toggle QR code visibility
 
   const fetchWasteData = async () => {
     setLoading(true);
@@ -31,6 +34,14 @@ const WasteMonitorDashboardPage = () => {
       );
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs.map((doc) => doc.data());
+
+      // Assuming user ID is stored in each waste data entry
+      if (data.length > 0) {
+        setUserId(
+          `http://localhost:5173/dashboard/waste-monitor?uid=${data[0].userId}`
+        ); // Get user ID from the first entry (adjust as needed)
+      }
+
       setWasteData(data);
     } catch (error) {
       console.error("Error fetching waste data: ", error);
@@ -55,6 +66,10 @@ const WasteMonitorDashboardPage = () => {
     const seconds = String(date.getSeconds()).padStart(2, "0");
 
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+  };
+
+  const handleShowQRCode = () => {
+    setShowQRCode(!showQRCode); // Toggle QR code visibility
   };
 
   return (
@@ -106,9 +121,7 @@ const WasteMonitorDashboardPage = () => {
                       <td className="border px-4 py-2">{entry.type}</td>
                       <td className="border px-4 py-2">{entry.locationName}</td>
                       <td className="border px-4 py-2">{entry.weight}</td>
-                      <td className="border px-4 py-2">
-                        {`[${entry.location.latitude}°, ${entry.location.longitude}°]`}
-                      </td>
+                      <td className="border px-4 py-2">{`[${entry.location.latitude}°, ${entry.location.longitude}°]`}</td>
                     </tr>
                   ))
                 ) : (
@@ -121,6 +134,25 @@ const WasteMonitorDashboardPage = () => {
               </tbody>
             </table>
           </div>
+
+          {/* QR Code Section */}
+          {userId && (
+            <div className="mt-6">
+              <h3 className="text-xl font-bold mb-4">User ID QR Code</h3>
+              <button
+                className="mt-2 bg-[#dee140] text-black py-2 px-4 rounded"
+                onClick={handleShowQRCode}
+              >
+                {showQRCode ? "Hide QR Code" : "Show QR Code"}
+              </button>
+              {showQRCode && (
+                <div className="mt-4">
+                  <QRCodeSVG value={userId} size={128} />{" "}
+                  {/* QR code with user ID */}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
