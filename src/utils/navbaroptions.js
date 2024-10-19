@@ -80,6 +80,12 @@ const userNav = [
     roles: ["USER"],
   },
   {
+    name: 'Dashboard',
+    route: '/admin/dashboard',
+    image: dashboardimg,
+    roles: ["ADMIN", "COLLECTOR"],
+  },
+  {
     name: "Assign Collector",
     route: "/assigncollectors",
     image: trackImage,
@@ -88,6 +94,18 @@ const userNav = [
   {
     name: "Collection requests",
     route: "/viewdata",
+    image: trackImage,
+    roles: ["COLLECTOR"],
+  },
+  {
+    name: 'Manage Trucks',
+    route: '/manage-trucks',
+    image: trackImage,
+    roles: ["ADMIN"],
+  },
+  {
+    name: 'Manage Dump Locations',
+    route: '/manage-dump-locations',
     image: trackImage,
     roles: ["ADMIN"],
   },
