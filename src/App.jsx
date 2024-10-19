@@ -28,6 +28,12 @@ import {
 import PaymentPortal from "./pages/IT21211232/paymentPortal/PaymentPortal.jsx";
 // Shalinda Imports End
 
+// Akila Imports
+import AssignCollectors from './pages/IT21832826/assign-collectors/assign-collectors.jsx';
+import ViewData from './pages/IT21832826/view-all-data/view-data.jsx';
+import PaymentRate from './pages/IT21832826/payment-rate/payment-rate.jsx';
+// Akila Imports End
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -43,6 +49,14 @@ function App() {
             <Route path="/user/payment" element={<UserPayment />} />
             <Route path="/user/payment/portal" element={<PaymentPortal />} />
           </Routes>
+
+          {/* Akila Routes */}
+          <Routes>
+            <Route path='/assigncollectors' element={<AssignCollectors/>}/>
+            <Route path='/viewdata' element={<ViewData/>}/>
+            <Route path='/paymentrate' element={<PaymentRate />}/>
+          </Routes>
+          {/* Akila Routes End */}
 
           {/* Shalinda Routes */}
           <Routes>

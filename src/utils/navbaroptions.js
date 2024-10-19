@@ -60,6 +60,21 @@ const userNav = [
     faIcon: faChartBar,
     roles: ["USER"],
   },
+    {
+        name: 'Assign Collector',
+        route: '/assigncollectors',
+        image: trackImage
+    },
+    {
+        name: 'Collection requests',
+        route: '/viewdata',
+        image: trackImage
+    },
+    {
+        name: 'Payment Rates',
+        route: '/paymentRate',
+        image: paymentImage
+    },
 ];
 
 // Function to get navigation items based on role

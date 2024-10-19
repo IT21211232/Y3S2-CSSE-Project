@@ -67,7 +67,7 @@ export default function ScheduleCard({data, getUser}) {
                 </button>
             }
             {
-                (!collected && !status) &&
+                (!collected) &&
                 <button 
                     className="px-4 h-8 text-[12px] border border-red-400 text-red-400 rounded hover:bg-red-400 hover:text-white transition duration-200 flex items-center"
                     onClick={() => handleDelete()}

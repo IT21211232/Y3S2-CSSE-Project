@@ -15,6 +15,7 @@ import {db} from '../../../config/firebase'; // imported from the firebase file 
 
 export default function dashboard() {
   const {currentPage, setCurrentPageData} = useContext(GlobalDataContext)
+  const [locationName, setLocationName] = useState("");
   const [wasteType, setWasteType] = useState("food")
   const [weight, setWeight] = useState("")
   const [time, setTime] = useState("")
@@ -167,6 +168,17 @@ export default function dashboard() {
                 <option value="electronics">Electronics</option>
                 <option value="paper">Paper</option>
             </select>
+            </div>
+            <div>
+            <input
+                type="text"
+                placeholder="Location"
+                className={getFieldStyle("location")}
+                value={locationName}
+                onChange={(e) => setLocationName(e.target.value)}
+                onFocus={() => handleFieldFocus("location")}
+                onBlur={handleFieldBlur}
+            />
             </div>
             <div>
             <input
